@@ -8,12 +8,13 @@ void testApp::setup(){
 	ofSetCircleResolution(3);
 
 	lenna.loadImage("lenna.png");
-	bDrawLenna = false;
-	bShowHelp  = true;
+	bDrawLenna = true;
+	bShowHelp  = false;
 	myFbo.allocate(512, 512);
 
 	myGlitch.setup(&myFbo);
 
+    myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE    , true);
 }
 
 //--------------------------------------------------------------

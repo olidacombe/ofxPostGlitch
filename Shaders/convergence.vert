@@ -1,7 +1,7 @@
-//頂点シェーダ
-varying vec3 pos;
-void main(void)
-{
-    pos = gl_Vertex.xyz;
-    gl_Position = ftransform();
-}
+ attribute vec4 position;
+ 
+ uniform mat4 modelViewProjectionMatrix;
+ 
+ void main(){
+     gl_Position = modelViewProjectionMatrix * position;
+ }
