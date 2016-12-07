@@ -10,7 +10,7 @@
 
 #include "ofMain.h"
 
-#define GLITCH_NUM 17
+#define GLITCH_NUM 1
 
 enum ofxPostGlitchType{
 	OFXPOSTGLITCH_CONVERGENCE,
@@ -38,6 +38,7 @@ public:
 	ofxPostGlitch(){
 		targetBuffer = NULL;
 		shader[0].load("Shaders/convergence");
+        /*
 		shader[1].load("Shaders/glow");
 		shader[2].load("Shaders/shaker");
 		shader[3].load("Shaders/cut_slider");
@@ -54,6 +55,7 @@ public:
 		shader[14].load("Shaders/crRedinvert");
 		shader[15].load("Shaders/crBlueinvert");
 		shader[16].load("Shaders/crGreeninvert");
+        */
 	}
 
 	/* Initialize & set target Fbo */
