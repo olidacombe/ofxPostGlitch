@@ -69,6 +69,7 @@ public:
 	void setFbo(ofFbo* buffer_);
 
     void setFx(const int& index, bool enabled);
+    void toggleFx(const int& index);
 
 	/* Switch each effects on/off */
 	//void setFx(ofxPostGlitchType type_,bool enabled);

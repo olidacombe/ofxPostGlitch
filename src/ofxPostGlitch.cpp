@@ -38,23 +38,21 @@ void ofxPostGlitch::loadShaders(const string& dir)
     }
 }
 
-void ofxPostGlitch::setFx(const int& index, bool enabled) {
-
+void ofxPostGlitch::setFx(const int& index, bool shadingState) {
+    try {
+        togShaders.at(index)->setShading(shadingState);
+    } catch(const std::out_of_range& e) {
+        // we don't have a shader at that index
+    }
 }
 
-/*
-void ofxPostGlitch::setFx(ofxPostGlitchType type_, bool enabled){
-	bShading[type_] = enabled;
+void ofxPostGlitch::toggleFx(const int& index) {
+    try {
+        togShaders.at(index)->toggleShading();
+    } catch(const std::out_of_range& e) {
+        // we don't have a shader at that index
+    }
 }
-
-void ofxPostGlitch::toggleFx(ofxPostGlitchType type_){
-	bShading[type_] ^= true;
-}
-
-bool ofxPostGlitch::getFx(ofxPostGlitchType type_){
-	return bShading[type_];
-}
-*/
 
 void ofxPostGlitch::generateFx(){
 	if (targetBuffer == NULL){
