@@ -18,6 +18,26 @@ void ofxPostGlitch::setFbo(ofFbo *buffer_){
 	ShadingBuffer.allocate(buffer_size.x,buffer_size.y);
 }
 
+void ofxPostGlitch::loadShaders(const string& dir)
+{
+    shaderDir = dir;
+    ofDirectory searchDirectory(dir);
+    searchDirectory.allowExt("vert");
+    searchDirectory.listDir();
+
+    togShaders.clear();
+
+    cout << "Shaders found:" << endl << endl;
+    //const string dirPrefix = searchDirectory.getAbsolutePath() + "/";
+    const string dirPrefix = shaderDir + "/";
+    for(ofFile vertShader : searchDirectory)
+    {
+        cout << vertShader.getBaseName() << endl;
+        cout << dirPrefix + vertShader.getBaseName() << endl;
+        togShaders.emplace_back(shared_ptr<toggleableShader>(new toggleableShader(dirPrefix + vertShader.getBaseName())));
+    }
+}
+
 void ofxPostGlitch::setFx(const int& index, bool enabled) {
 
 }

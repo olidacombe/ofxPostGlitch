@@ -30,8 +30,15 @@ public:
         ofShader shader;
     };
 
-	ofxPostGlitch() {
+    ofxPostGlitch() : ofxPostGlitch("Shaders")
+    {
+        //ofxPostGlitch("Shaders");
+    }
+
+	ofxPostGlitch(const string& searchDir)
+    {
 		targetBuffer = nullptr;
+        loadShaders(searchDir);
         /*
 		shader[0].load("Shaders/convergence");
 		shader[1].load("Shaders/glow");
@@ -52,6 +59,8 @@ public:
 		shader[16].load("Shaders/crGreeninvert");
         */
 	}
+
+    void loadShaders(const string& dir);
 
 	/* Initialize & set target Fbo */
 	void setup(ofFbo* buffer_);
@@ -74,6 +83,7 @@ public:
 	void generateFx();
 
 protected:
+    string shaderDir;
     vector<shared_ptr<toggleableShader>> togShaders;
 	ofFbo*		targetBuffer;
 	ofFbo		ShadingBuffer;
