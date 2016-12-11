@@ -22,6 +22,9 @@ public:
             shader.load(shaderPath);
         }
         ofShader& getShader() { return shader; }
+        bool isShading() { return shading; }
+        void toggleShading() { shading = !shading; }
+        void setShading(bool state) { shading = state; }
     private:
         bool shading;
         ofShader shader;

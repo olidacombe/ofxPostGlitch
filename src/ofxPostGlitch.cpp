@@ -56,34 +56,36 @@ void ofxPostGlitch::generateFx(){
 	ofSetColor(255);
 	glClearColor(0, 0, 0, 0.0);
 
-    /*
-	for (int i = 0;i < GLITCH_NUM;i++){
-		if (bShading[i]){
-			shader[i].begin();
-			shader[i].setUniformTexture	("image"		,*targetBuffer,0);
-			shader[i].setUniform1i		("trueWidth"	,buffer_size.x);
-			shader[i].setUniform1i		("trueHeight"	,buffer_size.y);
-			shader[i].setUniform1f		("rand"			,ofRandom(1));
-			shader[i].setUniform1f		("mouseX"		,ofGetMouseX());
-			shader[i].setUniform1f		("mouseY"		,ofGetMouseY());
-			shader[i].setUniform1f		("val1"			,ShadeVal[0]);
-			shader[i].setUniform1f		("val2"			,ShadeVal[1]);
-			shader[i].setUniform1f		("val3"			,ShadeVal[2]);
-			shader[i].setUniform1f		("val4"			,ShadeVal[3]);
-			shader[i].setUniform1f		("timer"		,ofGetElapsedTimef());
-			shader[i].setUniform2fv		("blur_vec"		,v);
+    for(shared_ptr<ofxPostGlitch::toggleableShader> togShader : togShaders)
+    {
+        if(togShader->isShading())
+        {
+            ofShader& tsh = togShader->getShader();
+            
+			tsh.begin();
+			tsh.setUniformTexture	("image"		,*targetBuffer,0);
+			tsh.setUniform1i		("trueWidth"	,buffer_size.x);
+			tsh.setUniform1i		("trueHeight"	,buffer_size.y);
+			tsh.setUniform1f		("rand"			,ofRandom(1));
+			tsh.setUniform1f		("mouseX"		,ofGetMouseX());
+			tsh.setUniform1f		("mouseY"		,ofGetMouseY());
+			tsh.setUniform1f		("val1"			,ShadeVal[0]);
+			tsh.setUniform1f		("val2"			,ShadeVal[1]);
+			tsh.setUniform1f		("val3"			,ShadeVal[2]);
+			tsh.setUniform1f		("val4"			,ShadeVal[3]);
+			tsh.setUniform1f		("timer"		,ofGetElapsedTimef());
+			tsh.setUniform2fv		("blur_vec"		,v);
 
 			ShadingBuffer.begin();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			ofRect(0, 0, buffer_size.x, buffer_size.y);
 			ShadingBuffer.end();
-			shader[i].end();
+			tsh.end();
 
 			targetBuffer->begin();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			ShadingBuffer.draw(0, 0,buffer_size.x,buffer_size.y);
 			targetBuffer->end();
-		}
-	}
-    */
+        }
+    }
 }
