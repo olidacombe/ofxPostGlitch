@@ -2,6 +2,7 @@
 //  ofxPostGlitch.cpp
 //
 //  Created by maxilla inc. on 2013/02/01.
+//  modified by olidacombe in fork
 //
 
 #include "ofxPostGlitch.h"
