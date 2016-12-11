@@ -16,8 +16,6 @@ void testApp::setup(){
 	myFbo.allocate(512, 512);
 
 	myGlitch.setup(&myFbo);
-
-    //myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE    , true);
 }
 
 //--------------------------------------------------------------
@@ -66,17 +64,17 @@ void testApp::draw(){
 
 
 	/* show information*/
-	string info = "";
-	info += "1 - 0 : Apply glitch effects.\n";
-	info += "q - u : Apply color remap effects.\n";
-	info += "L key : Switch 3Dview / 2DImage.\n";
-	info += "H key : Hide or show this information.";
+	stringstream info;
+    info << "fps: " << ofGetFrameRate() << endl;
+	info << "1 - 0 : Apply effects." << endl;
+	info << "L key : Switch 3Dview / 2DImage." << endl;
+	info << "H key : Hide or show this information.";
 
 	if (bShowHelp){
 		ofSetColor(0, 200);
 		ofRect(25, 17, 320, 60);
 		ofSetColor(255);
-		ofDrawBitmapString(info, 30,30);
+		ofDrawBitmapString(info.str(), 30,30);
 	}
 }
 
