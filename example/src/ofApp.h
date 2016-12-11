@@ -2,8 +2,10 @@
 
 #include "ofMain.h"
 #include "ofxPostGlitch.h"
+#include "TerminalListener.h"
 
-class testApp : public ofBaseApp{
+class testApp : public ofBaseApp, public KeyListener
+{
 
 public:
 	void setup();
@@ -31,4 +33,10 @@ public:
 
 	/*Addon instance*/
 	ofxPostGlitch	myGlitch;
+
+    TerminalListener consoleListener;
+    void onCharacterReceived(KeyListenerEventData& e) override
+    {
+        keyPressed((int)e.character);
+    }
 };

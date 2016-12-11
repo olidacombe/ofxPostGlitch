@@ -9,6 +9,7 @@
 #define __ofxPostGlitchExample__ofxPostGlitch__
 
 #include "ofMain.h"
+#include "TerminalListener.h"
 
 #define GLITCH_NUM 1
 

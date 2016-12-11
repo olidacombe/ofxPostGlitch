@@ -2,19 +2,22 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
+    consoleListener.setup(this);
+    ofHideCursor();
+
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
 	camera.setDistance(400);
 	ofSetCircleResolution(3);
 
 	lenna.loadImage("lenna.png");
-	bDrawLenna = true;
+	bDrawLenna = false;
 	bShowHelp  = false;
 	myFbo.allocate(512, 512);
 
 	myGlitch.setup(&myFbo);
 
-    myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE    , true);
+    //myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE    , true);
 }
 
 //--------------------------------------------------------------
@@ -79,6 +82,9 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
+    /* this is for quick testing only, messages
+    will be osc most likely */
+    /*
 	if (key == '1') myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE	, true);
 	if (key == '2') myGlitch.setFx(OFXPOSTGLITCH_GLOW			, true);
 	if (key == '3') myGlitch.setFx(OFXPOSTGLITCH_SHAKER			, true);
@@ -97,13 +103,32 @@ void testApp::keyPressed(int key){
 	if (key == 't') myGlitch.setFx(OFXPOSTGLITCH_CR_BLUEINVERT	, true);
 	if (key == 'y') myGlitch.setFx(OFXPOSTGLITCH_CR_REDINVERT	, true);
 	if (key == 'u') myGlitch.setFx(OFXPOSTGLITCH_CR_GREENINVERT	, true);
+    */
+    if('0' <= key && key <= '9') // ascii assumptions
+    {
+        cout << "keypress " << key << endl;
+    }
+
+    /*
+    if('q' <= key && key <= 'u')
+    {
+        cout << "keypress " << key << endl;
+    }
+    */
 
 	if (key == 'l') bDrawLenna ^= true;
 	if (key == 'h') bShowHelp ^= true;
+
+    if (key == 'q') ofExit();
 }
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
+    if('0' <= key && key <= '9') // ascii assumptions
+    {
+        cout << "keyrelease " << key << endl;
+    }
+    /*
 	if (key == '1') myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE	, false);
 	if (key == '2') myGlitch.setFx(OFXPOSTGLITCH_GLOW			, false);
 	if (key == '3') myGlitch.setFx(OFXPOSTGLITCH_SHAKER			, false);
@@ -122,6 +147,7 @@ void testApp::keyReleased(int key){
 	if (key == 't') myGlitch.setFx(OFXPOSTGLITCH_CR_BLUEINVERT	, false);
 	if (key == 'y') myGlitch.setFx(OFXPOSTGLITCH_CR_REDINVERT	, false);
 	if (key == 'u') myGlitch.setFx(OFXPOSTGLITCH_CR_GREENINVERT	, false);
+    */
 }
 
 //--------------------------------------------------------------
