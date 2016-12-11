@@ -105,6 +105,7 @@ void testApp::keyPressed(int key){
     if('0' <= key && key <= '9') // ascii assumptions
     {
         cout << "keypress " << key << endl;
+        myGlitch.setFx(key - '0', true);
     }
 
     /*
@@ -125,6 +126,7 @@ void testApp::keyReleased(int key){
     if('0' <= key && key <= '9') // ascii assumptions
     {
         cout << "keyrelease " << key << endl;
+        myGlitch.setFx(key - '0', false);
     }
     /*
 	if (key == '1') myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE	, false);

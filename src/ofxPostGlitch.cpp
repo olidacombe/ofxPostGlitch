@@ -18,6 +18,11 @@ void ofxPostGlitch::setFbo(ofFbo *buffer_){
 	ShadingBuffer.allocate(buffer_size.x,buffer_size.y);
 }
 
+void ofxPostGlitch::setFx(const int& index, bool enabled) {
+
+}
+
+/*
 void ofxPostGlitch::setFx(ofxPostGlitchType type_, bool enabled){
 	bShading[type_] = enabled;
 }
@@ -29,6 +34,7 @@ void ofxPostGlitch::toggleFx(ofxPostGlitchType type_){
 bool ofxPostGlitch::getFx(ofxPostGlitchType type_){
 	return bShading[type_];
 }
+*/
 
 void ofxPostGlitch::generateFx(){
 	if (targetBuffer == NULL){
@@ -50,6 +56,7 @@ void ofxPostGlitch::generateFx(){
 	ofSetColor(255);
 	glClearColor(0, 0, 0, 0.0);
 
+    /*
 	for (int i = 0;i < GLITCH_NUM;i++){
 		if (bShading[i]){
 			shader[i].begin();
@@ -78,4 +85,5 @@ void ofxPostGlitch::generateFx(){
 			targetBuffer->end();
 		}
 	}
+    */
 }

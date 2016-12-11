@@ -11,35 +11,26 @@
 #include "ofMain.h"
 #include "TerminalListener.h"
 
-#define GLITCH_NUM 1
-
-enum ofxPostGlitchType{
-	OFXPOSTGLITCH_CONVERGENCE,
-	OFXPOSTGLITCH_GLOW,
-	OFXPOSTGLITCH_SHAKER,
-	OFXPOSTGLITCH_CUTSLIDER,
-	OFXPOSTGLITCH_TWIST,
-	OFXPOSTGLITCH_OUTLINE,
-	OFXPOSTGLITCH_NOISE,
-	OFXPOSTGLITCH_SLITSCAN,
-	OFXPOSTGLITCH_SWELL,
-	OFXPOSTGLITCH_INVERT,
-	OFXPOSTGLITCH_CR_HIGHCONTRAST,
-	OFXPOSTGLITCH_CR_BLUERAISE,
-	OFXPOSTGLITCH_CR_REDRAISE,
-	OFXPOSTGLITCH_CR_GREENRAISE,
-	OFXPOSTGLITCH_CR_REDINVERT,
-	OFXPOSTGLITCH_CR_BLUEINVERT,
-	OFXPOSTGLITCH_CR_GREENINVERT
-};
-
 class ofxPostGlitch{
 public:
 
-	ofxPostGlitch(){
-		targetBuffer = NULL;
-		shader[0].load("Shaders/convergence");
+    class toggleableShader
+    {
+    public:
+        toggleableShader(const string& shaderPath) : shading(false)
+        {
+            shader.load(shaderPath);
+        }
+        ofShader& getShader() { return shader; }
+    private:
+        bool shading;
+        ofShader shader;
+    };
+
+	ofxPostGlitch() {
+		targetBuffer = nullptr;
         /*
+		shader[0].load("Shaders/convergence");
 		shader[1].load("Shaders/glow");
 		shader[2].load("Shaders/shaker");
 		shader[3].load("Shaders/cut_slider");
@@ -65,21 +56,22 @@ public:
 	/* Set target Fbo */
 	void setFbo(ofFbo* buffer_);
 
+    void setFx(const int& index, bool enabled);
+
 	/* Switch each effects on/off */
-	void setFx(ofxPostGlitchType type_,bool enabled);
+	//void setFx(ofxPostGlitchType type_,bool enabled);
 
 	/* Toggle each effects on/off */
-	void toggleFx(ofxPostGlitchType type_);
+	//void toggleFx(ofxPostGlitchType type_);
 
 	/* Return current effect's enabled info*/
-	bool getFx(ofxPostGlitchType type_);
+	//bool getFx(ofxPostGlitchType type_);
 
 	/* Apply enable effects to target Fbo */
 	void generateFx();
 
 protected:
-	bool		bShading[GLITCH_NUM];
-	ofShader	shader[GLITCH_NUM];
+    vector<shared_ptr<toggleableShader>> togShaders;
 	ofFbo*		targetBuffer;
 	ofFbo		ShadingBuffer;
 	ofPoint		buffer_size;
