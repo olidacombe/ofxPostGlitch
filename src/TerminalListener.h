@@ -1,5 +1,31 @@
 #pragma once
 
+#ifdef EMSCRIPTEN
+
+class KeyListenerEventData
+{
+public:
+    KeyListenerEventData(char character, void* listener) {}
+    char character;
+};
+
+class KeyListener
+{
+public:
+    virtual void onCharacterReceived(KeyListenerEventData& e) = 0;
+};
+
+class TerminalListener
+{
+private:
+public:
+    TerminalListener() { }
+    void setup(KeyListener* listener_, int sleepTime_ = 0) { }
+    
+};
+
+#else
+
 #include "ofMain.h"
 #include <fcntl.h>
 
@@ -110,3 +136,5 @@ public:
     }
     
 };
+
+#endif

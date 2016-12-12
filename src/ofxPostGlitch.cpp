@@ -21,7 +21,7 @@ void ofxPostGlitch::setFbo(ofFbo *buffer_){
 
 void ofxPostGlitch::loadShaders(const string& dir)
 {
-    shaderDir = dir;
+    shaderDir = ofToDataPath(dir, true);
     ofDirectory searchDirectory(dir);
     searchDirectory.allowExt("vert");
     searchDirectory.listDir();
@@ -30,7 +30,7 @@ void ofxPostGlitch::loadShaders(const string& dir)
 
     cout << "Shaders found:" << endl << endl;
     //const string dirPrefix = searchDirectory.getAbsolutePath() + "/";
-    const string dirPrefix = shaderDir + "/";
+    const string dirPrefix = ofToDataPath(shaderDir) + "/";
     for(ofFile vertShader : searchDirectory)
     {
         cout << vertShader.getBaseName() << endl;
@@ -43,7 +43,7 @@ void ofxPostGlitch::setFx(const int& index, bool shadingState) {
     try {
         togShaders.at(index)->setShading(shadingState);
     } catch(const std::out_of_range& e) {
-        // we don't have a shader at that index
+        cout << "requested shader out of range" << endl;
     }
 }
 
@@ -51,29 +51,29 @@ void ofxPostGlitch::toggleFx(const int& index) {
     try {
         togShaders.at(index)->toggleShading();
     } catch(const std::out_of_range& e) {
-        // we don't have a shader at that index
+        cout << "requested shader out of range" << endl;
     }
 }
 
 void ofxPostGlitch::generateFx(){
-	if (targetBuffer == NULL){
-		ofLog(OF_LOG_WARNING, "ofxFboFX --- Fbo is not allocated.");
-		return;
-	}
+    if (targetBuffer == NULL){
+            ofLog(OF_LOG_WARNING, "ofxFboFX --- Fbo is not allocated.");
+            return;
+    }
 
-	static int step = ofRandom(4,15);
-	float v[2];
-	v[0] = ofRandom(3);v[1] = ofRandom(3);
-	if (ofGetFrameNum() % step == 0){
-		step = ofRandom(10,30);
-		ShadeVal[0] = ofRandom(100);
-		ShadeVal[2] = ofRandom(100);
-		ShadeVal[3] = ofRandom(100);
-	}
+    static int step = ofRandom(4,15);
+    float v[2];
+    v[0] = ofRandom(3);v[1] = ofRandom(3);
+    if (ofGetFrameNum() % step == 0){
+            step = ofRandom(10,30);
+            ShadeVal[0] = ofRandom(100);
+            ShadeVal[2] = ofRandom(100);
+            ShadeVal[3] = ofRandom(100);
+    }
 
-	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-	ofSetColor(255);
-	glClearColor(0, 0, 0, 0.0);
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    ofSetColor(255);
+    glClearColor(0, 0, 0, 0.0);
 
     for(shared_ptr<ofxPostGlitch::toggleableShader> togShader : togShaders)
     {
@@ -81,30 +81,30 @@ void ofxPostGlitch::generateFx(){
         {
             ofShader& tsh = togShader->getShader();
             
-			tsh.begin();
-			tsh.setUniformTexture	("image"		,*targetBuffer,0);
-			tsh.setUniform1i		("trueWidth"	,buffer_size.x);
-			tsh.setUniform1i		("trueHeight"	,buffer_size.y);
-			tsh.setUniform1f		("rand"			,ofRandom(1));
-			tsh.setUniform1f		("mouseX"		,ofGetMouseX());
-			tsh.setUniform1f		("mouseY"		,ofGetMouseY());
-			tsh.setUniform1f		("val1"			,ShadeVal[0]);
-			tsh.setUniform1f		("val2"			,ShadeVal[1]);
-			tsh.setUniform1f		("val3"			,ShadeVal[2]);
-			tsh.setUniform1f		("val4"			,ShadeVal[3]);
-			tsh.setUniform1f		("timer"		,ofGetElapsedTimef());
-			tsh.setUniform2fv		("blur_vec"		,v);
+            tsh.begin();
+            tsh.setUniformTexture	("image"		,*targetBuffer,0);
+            tsh.setUniform1i		("trueWidth"	,buffer_size.x);
+            tsh.setUniform1i		("trueHeight"	,buffer_size.y);
+            tsh.setUniform1f		("rand"			,ofRandom(1));
+            tsh.setUniform1f		("mouseX"		,ofGetMouseX());
+            tsh.setUniform1f		("mouseY"		,ofGetMouseY());
+            tsh.setUniform1f		("val1"			,ShadeVal[0]);
+            tsh.setUniform1f		("val2"			,ShadeVal[1]);
+            tsh.setUniform1f		("val3"			,ShadeVal[2]);
+            tsh.setUniform1f		("val4"			,ShadeVal[3]);
+            tsh.setUniform1f		("timer"		,ofGetElapsedTimef());
+            tsh.setUniform2fv		("blur_vec"		,v);
 
-			ShadingBuffer.begin();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			ofRect(0, 0, buffer_size.x, buffer_size.y);
-			ShadingBuffer.end();
-			tsh.end();
+            ShadingBuffer.begin();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            ofRect(0, 0, buffer_size.x, buffer_size.y);
+            ShadingBuffer.end();
+            tsh.end();
 
-			targetBuffer->begin();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			ShadingBuffer.draw(0, 0,buffer_size.x,buffer_size.y);
-			targetBuffer->end();
+            targetBuffer->begin();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            ShadingBuffer.draw(0, 0,buffer_size.x,buffer_size.y);
+            targetBuffer->end();
         }
     }
 }

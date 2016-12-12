@@ -33,25 +33,25 @@ public:
 
     ofxPostGlitch() : ofxPostGlitch("Shaders") {}
 
-	ofxPostGlitch(const string& searchDir)
+    ofxPostGlitch(const string& searchDir)
     {
-		targetBuffer = nullptr;
-        loadShaders(searchDir);
-	}
+      targetBuffer = nullptr;
+      loadShaders(searchDir);
+    }
 
     void loadShaders(const string& dir);
 
-	/* Initialize & set target Fbo */
-	void setup(ofFbo* buffer_);
+    /* Initialize & set target Fbo */
+    void setup(ofFbo* buffer_);
 
-	/* Set target Fbo */
-	void setFbo(ofFbo* buffer_);
+    /* Set target Fbo */
+    void setFbo(ofFbo* buffer_);
 
     void setFx(const int& index, bool enabled);
     void toggleFx(const int& index);
 
-	/* Apply enable effects to target Fbo */
-	void generateFx();
+    /* Apply enable effects to target Fbo */
+    void generateFx();
 
 protected:
     string shaderDir;
