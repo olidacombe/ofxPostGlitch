@@ -78,6 +78,9 @@ OF_ROOT = ${PG_OF_PATH}
 # incorporated directly into the final executable application binary.
 ################################################################################
 # PROJECT_LDFLAGS=-Wl,-rpath=./libs
+PROJECT_LDFLAGS=-Wl,-rpath=./libs
+PROJECT_LDFLAGS += -s DISABLE_EXCEPTION_CATCHING=0
+PROJECT_LDFLAGS += -s ASSERTIONS=2
 
 ################################################################################
 # PROJECT DEFINES
@@ -105,7 +108,7 @@ OF_ROOT = ${PG_OF_PATH}
 #
 #   Note: Leave a leading space when adding list items with the += operator
 ################################################################################
-# PROJECT_CFLAGS = 
+#PROJECT_CFLAGS =-s DISABLE_EXCEPTION_CATCHING=0
 
 ################################################################################
 # PROJECT OPTIMIZATION CFLAGS
