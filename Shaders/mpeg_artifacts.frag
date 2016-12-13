@@ -1,6 +1,7 @@
 precision highp float; // this will make the default precision high
 
-varying vac2 texcoord0;
+varying vec2 texcoord0;
+uniform sampler2D tex0;
 
 void main()
 {

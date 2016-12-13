@@ -10,7 +10,6 @@
 #define __ofxPostGlitchExample__ofxPostGlitch__
 
 #include "ofMain.h"
-#include "TerminalListener.h"
 
 class ofxPostGlitch{
 public:
@@ -45,19 +44,20 @@ public:
 	void setup(ofFbo* buffer_);
 
 	/* Set target Fbo */
-	void setFbo(ofFbo* buffer_);
+	//void setFbo(ofFbo* buffer_);
 
     void setFx(const int& index, bool enabled);
     void toggleFx(const int& index);
 
 	/* Apply enable effects to target Fbo */
-	void generateFx();
+	void apply();
 
 protected:
     string shaderDir;
     vector<shared_ptr<toggleableShader>> togShaders;
 	ofFbo*		targetBuffer;
 	ofFbo		ShadingBuffer;
+    ofPlanePrimitive plane;
 	ofPoint		buffer_size;
 	float ShadeVal[4];
 };
