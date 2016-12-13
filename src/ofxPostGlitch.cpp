@@ -89,8 +89,9 @@ void ofxPostGlitch::apply(){
 			tsh.begin();
 			//tsh.setUniformTexture	("image"		,*targetBuffer,0);
 			tsh.setUniformTexture("tex0", *targetBuffer, targetBuffer->getTexture().getTextureData().textureID);
-            tsh.setUniform2f("resolution", buffer_size.x, buffer_size.y);
-            //tsh.setUniform2i("resolution", buffer_size.x, buffer_size.y);
+            tsh.setUniform2i("resolution", buffer_size.x, buffer_size.y);
+			tsh.setUniform1f("time", ofGetElapsedTimef());
+            //tsh.setUniform2f("resolution", buffer_size.x, buffer_size.y);
             /*
 			tsh.setUniform1i("trueWidth",buffer_size.x);
 			tsh.setUniform1i("trueHeight",buffer_size.y);
@@ -101,7 +102,6 @@ void ofxPostGlitch::apply(){
 			tsh.setUniform1f("val2", ShadeVal[1]);
 			tsh.setUniform1f("val3", ShadeVal[2]);
 			tsh.setUniform1f("val4", ShadeVal[3]);
-			tsh.setUniform1f("time", ofGetElapsedTimef());
 			tsh.setUniform2fv("blur_vec", v);
             */
 
