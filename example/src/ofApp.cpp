@@ -56,7 +56,7 @@ void testApp::draw(){
 	myFbo.draw(0, 0);
 
 	/* Apply effects */
-	myGlitch.generateFx();
+	myGlitch.apply();
 
 	/* draw effected view */
 	ofSetColor(255);
