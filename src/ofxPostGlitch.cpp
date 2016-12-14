@@ -8,20 +8,17 @@
 #include "ofxPostGlitch.h"
 
 void ofxPostGlitch::setup(ofFbo *buffer_){
-	targetBuffer = buffer_;
-	buffer_size.set(buffer_->getWidth(), buffer_->getHeight());
-	ShadingBuffer.allocate(buffer_size.x,buffer_size.y);
-    plane.set(buffer_size.x, buffer_size.y, 2, 2);
+    setup(&buffer_->getTexture(), buffer_);
 }
 
-/*
-void ofxPostGlitch::setFbo(ofFbo *buffer_){
+void ofxPostGlitch::setup(ofTexture* src, ofFbo *buffer_){
 	targetBuffer = buffer_;
+    sourceTexture = src;
+    //sourceTexture->bind();
 	buffer_size.set(buffer_->getWidth(), buffer_->getHeight());
 	ShadingBuffer.allocate(buffer_size.x,buffer_size.y);
     plane.set(buffer_size.x, buffer_size.y, 2, 2);
 }
-*/
 
 void ofxPostGlitch::loadShaders(const string& dir)
 {
@@ -61,7 +58,7 @@ void ofxPostGlitch::toggleFx(const int& index) {
 }
 
 void ofxPostGlitch::apply(){
-	if (targetBuffer == NULL){
+	if (targetBuffer == nullptr){
 		ofLog(OF_LOG_WARNING, "ofxFboFX --- Fbo is not allocated.");
 		return;
 	}
@@ -72,6 +69,7 @@ void ofxPostGlitch::apply(){
 	if (ofGetFrameNum() % step == 0){
 		step = ofRandom(10,30);
 		ShadeVal[0] = ofRandom(100);
+		ShadeVal[1] = ofRandom(100);
 		ShadeVal[2] = ofRandom(100);
 		ShadeVal[3] = ofRandom(100);
 	}
@@ -88,7 +86,10 @@ void ofxPostGlitch::apply(){
             
 			tsh.begin();
 			//tsh.setUniformTexture	("image"		,*targetBuffer,0);
-			tsh.setUniformTexture("tex0", *targetBuffer, targetBuffer->getTexture().getTextureData().textureID);
+            
+            //omit this owing to the bind() call in setup?
+			tsh.setUniformTexture("tex0", *sourceTexture, 0);
+
             tsh.setUniform2i("resolution", buffer_size.x, buffer_size.y);
 			tsh.setUniform1f("time", ofGetElapsedTimef());
             //tsh.setUniform2f("resolution", buffer_size.x, buffer_size.y);

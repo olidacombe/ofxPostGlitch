@@ -35,13 +35,15 @@ public:
 	ofxPostGlitch(const string& searchDir)
     {
 		targetBuffer = nullptr;
+        sourceTexture = nullptr;
         loadShaders(searchDir);
 	}
 
     void loadShaders(const string& dir);
 
 	/* Initialize & set target Fbo */
-	void setup(ofFbo* buffer_);
+	void setup(ofFbo* inout);
+	void setup(ofTexture* src, ofFbo* out);
 
 	/* Set target Fbo */
 	//void setFbo(ofFbo* buffer_);
@@ -55,6 +57,7 @@ public:
 protected:
     string shaderDir;
     vector<shared_ptr<toggleableShader>> togShaders;
+    ofTexture*  sourceTexture;
 	ofFbo*		targetBuffer;
 	ofFbo		ShadingBuffer;
     ofPlanePrimitive plane;
